@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('users_cards', function (Blueprint $table) {
+        Schema::create('card_player', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')
+            $table->foreignId('player_id')
                 ->references('id')
-                ->on('users')
+                ->on('players')
                 ->onDelete('cascade');
 
             $table->foreignId('card_id')
@@ -24,6 +24,6 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('users_cards');
+        Schema::dropIfExists('card_player');
     }
 };

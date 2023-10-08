@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string $username
  * @property int $level
  * @property int $level_points
+ * @property ?int $user_id
  * @property ?Carbon $created_at
  * @property ?Carbon $updated_at
  */

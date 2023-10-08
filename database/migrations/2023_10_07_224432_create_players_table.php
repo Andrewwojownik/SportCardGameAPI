@@ -13,6 +13,7 @@ return new class extends Migration {
             $table->integer('level_points');
             $table->foreignId('user_id')
                 ->nullable()
+                ->unique()
                 ->constrained()
                 ->references('id')
                 ->on('users');

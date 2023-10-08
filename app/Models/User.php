@@ -1,14 +1,27 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @property int $id
+ * @property string $email
+ * @property ?Carbon $email_verified_at
+ * @property string $name
+ * @property string $password
+ * @property ?Player $player
+ * @property ?string $remember_token
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -46,6 +59,6 @@ class User extends Authenticatable
 
     public function player(): BelongsTo
     {
-        return $this->belongsTo(Player::class);
+        return $this->belongsTo(Player::class, 'id', 'user_id');
     }
 }

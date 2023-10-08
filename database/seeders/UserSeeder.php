@@ -22,5 +22,17 @@ class UserSeeder extends Seeder
                          'created_at' => Carbon::now()->format('Y-m-d H:i:s')
                      ]);
         User::factory()->create();
+        User::factory()->create();
+        User::factory()->create();
+        User::factory()->create();
+        User::factory()->create();
+        User::factory()->create();
+        User::insert([
+                         'id' => 10,
+                         'email' => 'testempty@example.com',
+                         'password' => Hash::make('test123'),
+                         'name' => 'Test Empty',
+                         'created_at' => Carbon::now()->format('Y-m-d H:i:s')
+                     ]);
     }
 }

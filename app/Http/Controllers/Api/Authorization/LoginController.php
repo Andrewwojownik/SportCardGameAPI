@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Authorization;
 
 use App\Http\Controllers\Controller;
+use App\Models\Player;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -20,7 +21,16 @@ class LoginController extends Controller
                                           ]);
 
         if (Auth::attempt($request->only(['email', 'password']))) {
-            $user = User::where('email', $credentials['email'])->firstOrFail();
+            $user = auth()->user();
+
+            //TODO first login
+            if ($user->player == null) {
+                $player = new Player();
+                $player->user_id = $user->id;
+                $player->level = 1;
+                $player->level_points = 0;
+                $player->save();
+            }
 
             return response()->json([
                                         'info' => 'OK',

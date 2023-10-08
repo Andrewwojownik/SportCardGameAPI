@@ -32,7 +32,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
             'your_points' => 260,
             'opponent_points' => 100,
             'status' => 'active',
-            'cards' => config('game.cards'),
+            'cards' => auth()->user()->player?->cards,
         ];
     });
 
@@ -73,18 +73,31 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //CARDS
     Route::post('cards', function (Request $request) {
+        $user = auth()->user();
+
+        $cardChooser = app()->make(\App\Game\CardChooser::class);
+
+        if ($cardChooser->isAllowedToDrawNewCard(auth()->user()->player?->level ?? 1, count(auth()->user()->player?->cards ?? []))) {
+            $newCard = $cardChooser->chooseNextCard(\App\Models\Card::get());
+
+            $user->player->cards()->attach($newCard);
+        }
+
         return response()->json();
     });
 
     //USER DATA
     Route::get('user-data', function (Request $request) {
+        $cardChooser = app()->make(\App\Game\CardChooser::class);
+        $levelCalculator = app()->make(\App\Game\LevelCalculator::class);
+
         return [
-            'id' => 1,
-            'username' => 'Test User',
-            'level' => 1,
-            'level_points' => '40/100',
-            'cards' => config('game.cards'),
-            'new_card_allowed' => true,
+            'id' => auth()->user()->id,
+            'username' => auth()->user()->name,
+            'level' => auth()->user()->player?->level ?? 1,
+            'level_points' => (auth()->user()->player?->level_points ?? 1) . '/' . $levelCalculator->getPointsForNextLevel(auth()->user()->player?->level ?? 1),
+            'cards' => auth()->user()->player?->cards,
+            'new_card_allowed' => $cardChooser->isAllowedToDrawNewCard(auth()->user()->player?->level ?? 1, count(auth()->user()->player?->cards ?? [])),
         ];
     });
 });
