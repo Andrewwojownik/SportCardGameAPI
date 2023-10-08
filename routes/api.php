@@ -22,7 +22,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //START THE DUEL
     Route::post('duels', function (Request $request) {
-       return response()->json();
+        return response()->json();
     });
 
     //CURRENT GAME DATA

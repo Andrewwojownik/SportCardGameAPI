@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -12,6 +14,13 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        User::insert([
+                         'id' => 1,
+                         'email' => 'test@example.com',
+                         'password' => Hash::make('test123'),
+                         'name' => 'Test',
+                         'created_at' => Carbon::now()->format('Y-m-d H:i:s')
+                     ]);
         User::factory()->create();
     }
 }

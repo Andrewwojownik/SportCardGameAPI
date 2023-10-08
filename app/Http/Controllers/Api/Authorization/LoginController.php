@@ -15,17 +15,17 @@ class LoginController extends Controller
     public function login(Request $request): JsonResponse
     {
         $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+                                              'email' => ['required', 'email'],
+                                              'password' => ['required'],
+                                          ]);
 
         if (Auth::attempt($request->only(['email', 'password']))) {
             $user = User::where('email', $credentials['email'])->firstOrFail();
 
             return response()->json([
-                'info' => 'OK',
-                'token' => $user->createToken('login-token')->plainTextToken
-            ]);
+                                        'info' => 'OK',
+                                        'token' => $user->createToken('login-token')->plainTextToken
+                                    ]);
         }
 
         return response()->json(['info' => __('Email or password is incorrect')], Response::HTTP_UNAUTHORIZED);
