@@ -43,32 +43,28 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //DUELS HISTORY
     Route::get('duels', function (Request $request) {
-        return [
-            [
-                "id" => 1,
-                "player_name" => "Jan Kowalski",
-                "opponent_name" => "Piotr Nowak",
-                "won" => 0
-            ],
-            [
-                "id" => 2,
-                "player_name" => "Jan Kowalski",
-                "opponent_name" => "Tomasz Kaczyński",
-                "won" => 1
-            ],
-            [
-                "id" => 3,
-                "player_name" => "Jan Kowalski",
-                "opponent_name" => "Agnieszka Tomczak",
-                "won" => 1
-            ],
-            [
-                "id" => 4,
-                "player_name" => "Jan Kowalski",
-                "opponent_name" => "Michał Bladowski",
-                "won" => 1
-            ],
-        ];
+        $user = auth()->user();
+        $player = $user->player;
+        $duels = \App\Models\DuelHistory::where('player_one_id', $player->id)->orWhere('player_two_id', $player->id)->get();
+
+        $duelResults = [];
+        foreach ($duels as $duel) {
+            $playerName = $duel->playerOne->user?->name ?? ('BOT ' . $duel->player_one_id);
+            $oponentName = $duel->playerTwo->user?->name ?? ('BOT ' . $duel->player_two_id);
+
+            if ($duel->player_two_id === $player->id) {
+                [$oponentName, $playerName] = [$playerName, $oponentName];
+            }
+
+            $duelResults[] = [
+                'id' => $duel->id,
+                'player_name' => $playerName,
+                'opponent_name' => $oponentName,
+                'won' => (int)($duel->winner_id === $player->id),
+            ];
+        }
+
+        return $duelResults;
     });
 
     //CARDS
