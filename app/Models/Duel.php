@@ -9,17 +9,14 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 /**
  * @property int $id
  * @property int $player_one_id
- * @property int $player_one_points
  * @property Player $playerOne
  * @property int $player_two_id
- * @property int $player_two_points
  * @property Player $playerTwo
- * @property int $winner_id
- * @property Player $winner
+ * @property int $last_finished_round
  * @property ?Carbon $created_at
  * @property ?Carbon $updated_at
  */
-class DuelHistory extends Model
+class Duel extends Model
 {
     public function playerOne(): HasOne
     {
@@ -29,10 +26,5 @@ class DuelHistory extends Model
     public function playerTwo(): HasOne
     {
         return $this->hasOne(Player::class, 'id', 'player_two_id');
-    }
-
-    public function winner(): HasOne
-    {
-        return $this->hasOne(Player::class, 'id', 'winner_id');
     }
 }

@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CardSeeder::class);
         $this->call(PlayerSeeder::class);
         $this->call(DuelHistorySeeder::class);
+        $this->call(PlayerCardSeeder::class);
     }
 }

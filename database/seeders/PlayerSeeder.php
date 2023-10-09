@@ -20,32 +20,44 @@ class PlayerSeeder extends Seeder
                        ]);
 
         Player::insert([
+                           'id' => 2,
                            'level' => 2,
                            'level_points' => 90,
                            'user_id' => 2,
                            'created_at' => Carbon::now()->format('Y-m-d H:i:s')
                        ]);
         Player::insert([
+                           'id' => 3,
                            'level' => 2,
                            'level_points' => 90,
                            'user_id' => null,
                            'created_at' => Carbon::now()->format('Y-m-d H:i:s')
                        ]);
         Player::insert([
+                           'id' => 4,
                            'level' => 2,
                            'level_points' => 90,
                            'user_id' => null,
                            'created_at' => Carbon::now()->format('Y-m-d H:i:s')
                        ]);
         Player::insert([
+                           'id' => 5,
                            'level' => 2,
                            'level_points' => 90,
                            'user_id' => null,
                            'created_at' => Carbon::now()->format('Y-m-d H:i:s')
                        ]);
         Player::insert([
+                           'id' => 6,
                            'level' => 3,
                            'level_points' => 190,
+                           'user_id' => null,
+                           'created_at' => Carbon::now()->format('Y-m-d H:i:s')
+                       ]);
+        Player::insert([
+                           'id' => 7,
+                           'level' => 1,
+                           'level_points' => 10,
                            'user_id' => null,
                            'created_at' => Carbon::now()->format('Y-m-d H:i:s')
                        ]);
